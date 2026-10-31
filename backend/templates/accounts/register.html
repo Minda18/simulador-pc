@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Crear cuenta · Simulador de PC{% endblock %}
+
+{% block content %}
+<div class="auth-layout">
+  <section class="card form-card">
+    <h1>Crear cuenta</h1>
+    <p class="muted">
+      Regístrate como Usuario para guardar y comparar tus builds.
+    </p>
+
+    {% if form.non_field_errors %}
+      <div class="alert alert-error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="field">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field }}
+          {% if field.help_text %}
+            <p class="field-help">{{ field.help_text|safe }}</p>
+          {% endif %}
+          {% if field.errors %}
+            <p class="field-error">{{ field.errors|striptags }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+      <button type="submit" class="button">Registrarme</button>
+    </form>
+
+    <p class="muted form-footer">
+      ¿Ya tienes cuenta?
+      <a href="{% url 'accounts:login' %}">Inicia sesión</a>.
+    </p>
+  </section>
+</div>
+{% endblock %}

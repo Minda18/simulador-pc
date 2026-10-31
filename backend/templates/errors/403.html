@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Acceso denegado · Simulador de PC{% endblock %}
+
+{% block content %}
+<section class="card empty-state">
+  <p class="eyebrow">Error 403</p>
+  <h1>No tienes permisos para entrar aquí</h1>
+  <p>
+    Esta sección está reservada para otro rol. Vuelve a tu panel o al catálogo
+    público.
+  </p>
+  <div class="hero-actions">
+    <a class="button" href="{% url 'core:panel' %}">Ir a mi panel</a>
+    <a class="button button-ghost" href="{% url 'core:home' %}">Volver al inicio</a>
+  </div>
+</section>
+{% endblock %}

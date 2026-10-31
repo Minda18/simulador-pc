@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Mi panel · Simulador de PC{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Usuario registrado</p>
+    <h1>Hola, {{ user.nombre_visible }}</h1>
+    <p class="muted">
+      Aquí aparecerán las configuraciones que guardes. La creación y edición
+      de builds estará disponible en próximas entregas.
+    </p>
+  </div>
+  <a class="button" href="{% url 'core:catalog' %}">Explorar catálogo</a>
+</header>
+
+<section class="card">
+  <h2>Mis builds <span class="badge badge-warn">Solo lectura</span></h2>
+
+  <div class="alert alert-info">
+    Las builds guardadas se muestran en modo de consulta. La creación y
+    edición desde la interfaz todavía no está habilitada.
+  </div>
+
+  {% if builds %}
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Componentes</th>
+            <th>Total</th>
+            <th>Actualizada</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for build in builds %}
+            <tr>
+              <td>{{ build.name }}</td>
+              <td>{{ build.items.count }}</td>
+              <td>${{ build.total_price }}</td>
+              <td>{{ build.updated_at|date:"d/m/Y H:i" }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <h3>Todavía no tienes builds guardadas</h3>
+      <p>
+        Explora el catálogo y conoce los componentes disponibles. La creación
+        y el guardado de builds se habilitarán en próximas entregas.
+      </p>
+      <a class="button button-ghost" href="{% url 'core:catalog' %}">
+        Ir al catálogo
+      </a>
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

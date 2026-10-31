@@ -1,0 +1,100 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Simulador de PC{% endblock %}</title>
+  <script>
+    /* Aplica el tema antes de pintar para evitar el destello de color. */
+    (function () {
+      var key = "simulador-pc-theme";
+      var theme = null;
+      try {
+        theme = window.localStorage.getItem(key);
+      } catch (error) {
+        theme = null;
+      }
+      if (theme !== "light" && theme !== "dark") {
+        theme = window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+      }
+      document.documentElement.setAttribute("data-theme", theme);
+    })();
+  </script>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <script src="{% static 'js/theme.js' %}" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+  <header class="site-header">
+    <nav class="nav container" aria-label="Navegación principal">
+      <a class="brand" href="{% url 'core:home' %}">
+        <span class="brand-name">Simulador<span>PC</span></span>
+      </a>
+
+      <div class="nav-links">
+        <a href="{% url 'core:catalog' %}">Catálogo</a>
+        {% if user.is_authenticated %}
+          <a href="{% url 'core:panel' %}">Mi panel</a>
+          {% if user.is_administrador %}
+            <a href="{% url 'admin:index' %}">Django Admin</a>
+          {% endif %}
+          <span class="user-chip">
+            {{ user.nombre_visible }} · {{ user.get_role_display }}
+          </span>
+          <form method="post" action="{% url 'accounts:logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="link-button">Salir</button>
+          </form>
+        {% else %}
+          <a href="{% url 'accounts:login' %}">Iniciar sesión</a>
+          <a class="button button-small" href="{% url 'accounts:register' %}">
+            Crear cuenta
+          </a>
+        {% endif %}
+
+        <button
+          type="button"
+          class="theme-toggle"
+          data-theme-toggle
+          aria-label="Activar tema oscuro"
+          aria-pressed="false"
+          title="Cambiar tema"
+        >
+          <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/>
+          </svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/>
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido" class="container">
+    {% if messages %}
+      <div class="messages">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags|default:'info' }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span>Simulador de Armado y Compatibilidad de PC</span>
+      <span class="footer-meta">Django · PostgreSQL · Vite</span>
+    </div>
+  </footer>
+</body>
+</html>

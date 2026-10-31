@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio · Simulador de PC{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">Hardware / Compatibilidad</p>
+    <h1>Arma tu PC.<br><span class="highlight">Sin adivinar.</span></h1>
+    <p class="lead">
+      Explora el catálogo de ejemplo y descubre cómo se validarán socket,
+      memoria, potencia, formato y cuellos de botella. El armado interactivo
+      y las alertas en vivo estarán disponibles en próximas entregas.
+    </p>
+    <div class="hero-actions">
+      <a class="button" href="{% url 'core:catalog' %}">Explorar catálogo</a>
+      {% if not user.is_authenticated %}
+        <a class="button button-ghost" href="{% url 'accounts:register' %}">
+          Crear cuenta
+        </a>
+      {% endif %}
+    </div>
+    <p class="hero-note">
+      <span class="badge badge-warn">Próximamente</span>
+      Armado interactivo y validaciones en vivo.
+    </p>
+    <div class="hero-metrics">
+      <div>
+        <span class="metric-value">8</span>
+        <span class="metric-label">tipos de chequeo</span>
+      </div>
+      <div>
+        <span class="metric-value">3</span>
+        <span class="metric-label">niveles de alerta</span>
+      </div>
+      <div>
+        <span class="metric-value">PDF</span>
+        <span class="metric-label">exportación</span>
+      </div>
+    </div>
+  </div>
+
+  <aside class="build-panel" aria-label="Vista previa de una build con validaciones">
+    <div class="build-panel__bar">
+      <span class="window-dots" aria-hidden="true">
+        <i></i><i></i><i></i>
+      </span>
+      <span class="panel-label">build.preview · demo</span>
+      <span class="badge badge-warn">3 de 5 OK</span>
+    </div>
+
+    <div class="build-rows">
+      <div class="build-row">
+        <span class="build-type">CPU</span>
+        <span class="build-name">Ryzen 5 7600</span>
+        <span class="status status-ok">AM5</span>
+      </div>
+      <div class="build-row">
+        <span class="build-type">Placa</span>
+        <span class="build-name">B650M Aorus</span>
+        <span class="status status-ok">AM5</span>
+      </div>
+      <div class="build-row">
+        <span class="build-type">RAM</span>
+        <span class="build-name">DDR5 32 GB</span>
+        <span class="status status-ok">6000 MT/s</span>
+      </div>
+      <div class="build-row">
+        <span class="build-type">GPU</span>
+        <span class="build-name">RTX 4070</span>
+        <span class="status status-warn">320 mm</span>
+      </div>
+      <div class="build-row">
+        <span class="build-type">Fuente</span>
+        <span class="build-name">650 W 80+ Gold</span>
+        <span class="status status-error">720 W req.</span>
+      </div>
+    </div>
+
+    <div class="build-summary">
+      <div>
+        <span class="summary-label">Costo estimado</span>
+        <span class="summary-number">$1.248</span>
+      </div>
+      <div>
+        <span class="summary-label">Consumo</span>
+        <span class="summary-number">720 W</span>
+      </div>
+      <div
+        class="power-meter power-meter--error"
+        role="img"
+        aria-label="Consumo de 720 vatios sobre una fuente de 650 vatios"
+      >
+        <span></span>
+      </div>
+      <p class="panel-note">Fuente de 650 W · faltan 70 W de margen</p>
+    </div>
+  </aside>
+</section>
+
+<section class="section">
+  <header class="section-head">
+    <p class="eyebrow">Flujo previsto</p>
+    <h2>Así funcionará el armado en tres pasos</h2>
+  </header>
+  <ol class="steps">
+    <li class="step">
+      <span class="step-number">01</span>
+      <h3>Explora las piezas</h3>
+      <p>Consulta el catálogo y conoce los componentes disponibles.</p>
+    </li>
+    <li class="step">
+      <span class="step-number">02</span>
+      <h3>Valida en vivo</h3>
+      <p>El motor revisará compatibilidad, consumo y cuellos de botella.</p>
+    </li>
+    <li class="step">
+      <span class="step-number">03</span>
+      <h3>Guarda o comparte</h3>
+      <p>Podrás conservar la build, compararla o exportarla como PDF o enlace.</p>
+    </li>
+  </ol>
+  <p class="section-note">
+    <span class="badge badge-warn">Próximamente</span>
+    La validación en vivo y el guardado de builds se habilitarán en próximas entregas.
+  </p>
+</section>
+
+<section class="section">
+  <header class="section-head">
+    <p class="eyebrow">Qué validará</p>
+    <h2>Un chequeo técnico, no una corazonada</h2>
+  </header>
+
+  <div class="bento-grid">
+    <article class="card bento-card bento-card--wide">
+      <p class="eyebrow">Motor de reglas</p>
+      <h3>Compatibilidad entre piezas</h3>
+      <ul class="check-list">
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          Socket del CPU contra la placa madre
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          Tipo y velocidad de la memoria RAM
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          Potencia de la fuente frente al consumo
+        </li>
+        <li class="check-item">
+          <span class="check-icon" aria-hidden="true">✓</span>
+          Formato de placa y longitud de la GPU
+        </li>
+      </ul>
+    </article>
+
+    <article class="card bento-card bento-card--side">
+      <p class="eyebrow">Consumo</p>
+      <h3>¿Te alcanzará la fuente?</h3>
+      <p class="muted">Así verás el margen real antes de comprar.</p>
+      <div
+        class="meter"
+        role="img"
+        aria-label="Consumo estimado de 520 vatios sobre una fuente de 650"
+      >
+        <span class="meter-bar" style="width: 80%"></span>
+      </div>
+      <div class="meter-meta">
+        <span>520 W usados</span>
+        <span>650 W</span>
+      </div>
+      <span class="badge badge-ok">Margen 20%</span>
+    </article>
+
+    <article class="card bento-card">
+      <p class="eyebrow">Costo</p>
+      <h3>Presupuesto estimado</h3>
+      <p class="price-big">$1.248</p>
+      <p class="muted">
+        La suma de cada componente se calculará automáticamente.
+      </p>
+    </article>
+
+    <article class="card bento-card">
+      <p class="eyebrow">Alertas</p>
+      <h3>Verde, amarillo, rojo</h3>
+      <p class="muted">
+        Cada conflicto incluirá el motivo y una recomendación.
+      </p>
+      <div class="badge-row">
+        <span class="badge badge-ok">Compatible</span>
+        <span class="badge badge-warn">Advertencia</span>
+        <span class="badge badge-error">Incompatible</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div>
+    <p class="eyebrow">Catálogo disponible</p>
+    <h2>Explora los componentes de ejemplo</h2>
+    <p class="muted cta-note">
+      El armado interactivo estará disponible en próximas entregas.
+    </p>
+  </div>
+  <a class="button" href="{% url 'core:catalog' %}">Ver catálogo</a>
+</section>
+{% endblock %}

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Panel de Administrador · Simulador de PC{% endblock %}
+
+{% block content %}
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Administrador</p>
+    <h1>Hola, {{ user.nombre_visible }}</h1>
+    <p class="muted">
+      Desde aquí puedes supervisar el simulador y acceder al Django Admin.
+    </p>
+  </div>
+  <a class="button" href="{% url 'admin:index' %}">Abrir Django Admin</a>
+</header>
+
+<section class="stats-grid">
+  <article class="card stat">
+    <span class="stat-value">{{ user_count }}</span>
+    <span class="stat-label">Usuarios</span>
+  </article>
+  <article class="card stat">
+    <span class="stat-value">{{ component_count }}</span>
+    <span class="stat-label">Componentes</span>
+  </article>
+  <article class="card stat">
+    <span class="stat-value">{{ rule_count }}</span>
+    <span class="stat-label">Reglas de compatibilidad</span>
+  </article>
+  <article class="card stat">
+    <span class="stat-value">{{ build_count }}</span>
+    <span class="stat-label">Builds</span>
+  </article>
+</section>
+
+<section class="card">
+  <h2>Gestión rápida</h2>
+  <div class="action-grid">
+    <a class="action-link" href="{% url 'admin:accounts_user_changelist' %}">
+      <strong>Usuarios y roles</strong>
+      <span>Revisa cuentas y privilegios.</span>
+    </a>
+    <a class="action-link" href="{% url 'admin:catalog_component_changelist' %}">
+      <strong>Componentes</strong>
+      <span>Carga y edita piezas del catálogo.</span>
+    </a>
+    <a class="action-link" href="{% url 'admin:catalog_compatibilityrule_changelist' %}">
+      <strong>Reglas</strong>
+      <span>Define validaciones entre tipos de componente.</span>
+    </a>
+    <a class="action-link" href="{% url 'admin:builds_build_changelist' %}">
+      <strong>Builds</strong>
+      <span>Consulta las configuraciones guardadas.</span>
+    </a>
+  </div>
+</section>
+
+<section class="card notice">
+  <h2>Motor de compatibilidad</h2>
+  <p>
+    El modelo de reglas ya está disponible en el admin. La ejecución automática
+    de las validaciones y las alertas en tiempo real se implementará en la
+    siguiente iteración del proyecto.
+  </p>
+</section>
+{% endblock %}
